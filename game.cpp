@@ -44,6 +44,9 @@ int xI = 10, yI = 800;
 int x2, y2, x3, y3, x4, y4, x5, y5/**Ptrx, *Ptry*/;
 int a = 60, b=100;
 int c=b-a;
+
+int x=50, y=670;
+int z=y-x;
 pthread_t  t1, t2, t3, t4;   
 void drawTaxi() 
 {
@@ -81,20 +84,45 @@ void drawGreenCar()
        DrawSquare(x3, y3, 30, colors[YELLOW]);      
 }
 
-void drawPlayer(){
- DrawCircle(a, b, 10,colors[WHITE]);
-	DrawLine( a , b , a , c , 2 , colors[WHITE] );
-	DrawLine( a , c ,  a+10 , c-20 , 2 , colors[WHITE] );
-        DrawLine( a , c , a-20 , c-20 , 2 , colors[WHITE] );
+void* drawPlayer(void* arg){
+ DrawCircle(a, b, 10,colors[BLACK]);
+	DrawLine( a , b , a , c , 2 , colors[BLACK] );
+	DrawLine( a , c ,  a+10 , c-20 , 2 , colors[BLACK] );
+        DrawLine( a , c , a-20 , c-20 , 2 , colors[BLACK] );
         glutPostRedisplay();
+        return NULL;
 }
-void drawPassenger()                                       //draws passenger in the display
-{   
-         DrawCircle(50,670,10,colors[WHITE]);
-	 DrawLine( 50 , 670 ,  50 , 620 , 2 , colors[WHITE] );
-	 DrawLine( 50 , 620 ,  60 , 600 , 2 , colors[WHITE] );
-         DrawLine( 50 , 620 ,  40 , 600 , 2 , colors[WHITE] );
+void* drawPassenger(void* arg)                                       //draws passenger in the display
+{ 
+
+         DrawCircle(x,y,10,colors[BLACK]);
+	 DrawLine( x , y,  x , z , 2 , colors[BLACK] );
+	 DrawLine( x , z ,  x+10 , z-20 , 2 , colors[BLACK] );
+         DrawLine( x , z ,  x-20 , z-20 , 2 , colors[BLACK] );
+         glutPostRedisplay();
+         return NULL;
+//  
+//         DrawCircle(50,670,10,colors[WHITE]);
+//	 DrawLine( 50 , 670 ,  50 , 620 , 2 , colors[WHITE] );
+//	 DrawLine( 50 , 620 ,  60 , 600 , 2 , colors[WHITE] );
+//         DrawLine( 50 , 620 ,  40 , 600 , 2 , colors[WHITE] );
         
+//        vector<unsigned char> imgArray;
+//        ReadImage("sprite.png", imgArray);
+//         using namespace cimg_library;
+//        CImg<unsigned char> img("sprite.png");
+//        img.display();
+       
+        
+//        for (int j = 0; j < img.width(); ++j) {
+//		int t = j;
+//		for (int i = 0; i < img.height(); ++i, t += img.width()) {
+//			imgArray[k++] = rp[t];
+//			imgArray[k++] = gp[t];
+//			imgArray[k++] = bp[t];
+//		}
+//		//imgArray[i][j] = img[k++];
+//	}
       /*int a = GetRandInRange(50, 90);
       int b = 100;  
       int c= b-a;*/
@@ -148,7 +176,7 @@ void drawBoard()                                 //Draws the player board
 	// to change the background play with the red, green and blue values below.
 	// Note that r, g and b values must be in the range [0,1] where 0 means dim rid and 1 means pure red and so on.
 
-	glClearColor(0, 0, 0, 0); // Red==Green==Blue==1 --> White Colour
+	glClearColor(1, 1, 1, 1); // Red==Green==Blue==1 --> White Colour
 	glClear (GL_COLOR_BUFFER_BIT); //Update the colors
 	
 	
@@ -229,7 +257,10 @@ void drawBoard()                                 //Draws the player board
 //	
 //	//Draw Roads
 //        
-
+DrawLine(100, 100, 800, 100, 10, colors[DARK_CYAN]); //bottom line
+	DrawLine(100, 100, 100, 800, 10, colors[DARK_CYAN]); // left line
+	DrawLine(100, 800, 800, 800, 10, colors[DARK_CYAN]); //top line
+	DrawLine(800, 100, 800, 800, 10, colors[DARK_CYAN]); //right line
 
 
         for(int i=100; i<800; i=i+50)
@@ -245,13 +276,13 @@ void drawBoard()                                 //Draws the player board
 	DrawTriangle( 500, 400 , 540, 400 , 520 , 440, colors[BLUE] );
 	DrawTriangle( 500, 650 , 540, 650 , 520 , 690, colors[GREEN] );
 	DrawTriangle( 600, 600 , 640, 600 , 620 , 640, colors[VIOLET] );
-	DrawTriangle( 400, 550 , 440, 550 , 420 , 590, colors[YELLOW] );
+	DrawTriangle( 400, 550 , 440, 550 , 420 , 590, colors[TOMATO] );
 	
 	
 	DrawTriangle( 350, 500 , 390, 500 , 370 , 540, colors[CRIMSON] );	
 	DrawTriangle( 200, 350 , 240, 350 , 220 , 390, colors[HOT_PINK] );
 	DrawTriangle( 100, 400 , 140, 400 , 120 , 440, colors[DEEP_PINK] );
-	DrawTriangle( 500, 300 , 540, 300 , 520 , 340, colors[LAVENDER] );
+	DrawTriangle( 500, 300 , 540, 300 , 520 , 340, colors[NAVY] );
 	DrawTriangle( 150, 200 , 190, 200 , 170 , 240, colors[PLUM] );
 	DrawTriangle( 300, 200 , 340, 200 , 320 , 240, colors[TAN] );
 	
@@ -271,15 +302,16 @@ void drawBoard()                                 //Draws the player board
  * */
 
 void GameDisplay()/**/{
-	
+	int nothing=0;
 	drawBoard();
 	drawTaxi();
 	//drawblueCar();
 	//drawGreenCar();
 	//drawCyanCar();
 	//drawPurpleCar();
-	drawPassenger();
-	drawPlayer();
+	
+	drawPassenger((void*)nothing);
+	drawPlayer((void*)nothing);
         glutSwapBuffers(); // do not modify this line..
 
 }
@@ -296,36 +328,24 @@ void GameDisplay()/**/{
  *
  * */
 
-void NonPrintableKeys(int key, int x, int y) {
+void NonPrintableKeys(int key, int xx, int yy) {
 	if (key
 			== GLUT_KEY_LEFT /*GLUT_KEY_LEFT is constant and contains ASCII for left arrow key*/) {
 		// what to do when left key is pressed...
 		//xI -= 10;
 		a -= 10;
-//		if(b>a)
-//		{c=b-a;}
-//		else
-//		c=a-b;
+	
 
 	} else if (key
 			== GLUT_KEY_RIGHT /*GLUT_KEY_RIGHT is constant and contains ASCII for right arrow key*/) {
 		//xI += 10;
 		a += 10;
-		//c=b-a;
-//		if(b>a)
-//		{c=b-a;}
-//		else
-//		c=a-b;
 		
 	} else if (key
 			== GLUT_KEY_UP/*GLUT_KEY_UP is constant and contains ASCII for up arrow key*/) {
 		//yI += 10;
 		b += 10;
-	c+=10;
-//		if(b>a)
-//		{c=b-a;}
-//		else
-//		c=a-b;
+	        c+=10;
 		
 	}
 
@@ -335,10 +355,6 @@ void NonPrintableKeys(int key, int x, int y) {
 
 		b -= 10;
 		c-=10;
-//		if(b>a)
-//		{c=b-a;}
-//		else
-//		c=a-b;
 		
 	}
 
@@ -354,41 +370,45 @@ void NonPrintableKeys(int key, int x, int y) {
  * This function has three argument variable key contains the ASCII of the key pressed, while x and y tells the
  * program coordinates of mouse pointer when key was pressed.
  * */
-void PrintableKeys(unsigned char key, int x, int y) {
-	if (key == 27/* Escape key ASCII*/) {
-		exit(1); // exit the program when escape key is pressed.
-	}
-	x =xI;
-	y =yI;
+void PrintableKeys(unsigned char key, int xx, int yy) {
+//	if (key == 27/* Escape key ASCII*/) {
+//		exit(1); // exit the program when escape key is pressed.
+//	}
+//	x =xI;
+//	y =yI;
 
-	if (key == 32 && xI==53)                      //when spacebar pressed disappear the passenger
-			{
-			  if (yI ==670 || yI==187)
-			   {
-			    DrawSquare(xI, yI, 30, colors[BLACK]);
-			   }   
-		
-		cout << "space pressed" << endl;
+//	if (key == 32 && xI==53)                      //when spacebar pressed disappear the passenger
+//			{
+//			  if (yI ==670 || yI==187)
+//			   {
+//			    DrawSquare(xI, yI, 30, colors[BLACK]);
+//			   }   
+//		
+//		cout << "space pressed" << endl;
 
-	}
+//	}
+//	ascii of A is 97, d is 100 , s is 115, w is 119
 	
+	if(key ==100)
+	{
+	   //xI+=10;
+	   x+=10;
 	
-	if(key ==65)
-	{
-	   xI+=10;
-	
 	}
-	else if (key ==68)
+	else if (key ==97)
 	{
-	   xI-=10;
+	   //xI-=10;
+	   x-=10;
 	}
-	else if (key ==83)
+	else if (key ==115)
 	{
-	   yI-=10;
+	   y-=10;
+	   z-=10;
 	}
-	else if (key ==87)
+	else if (key ==119)
 	{
-	   yI+=10;
+	   y+=10;
+	   z+=10;
 	}
 	
 	
@@ -476,6 +496,9 @@ int main(int argc, char*argv[]) {
           //sleep(2);
           cout<<"Enter taxi";
 cin>>taxi;
+
+
+         
 	InitRandomizer(); // seed the random number generator...
 	glutInit(&argc, argv); // initialize the graphics library...
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA); // we will be using color display mode
@@ -484,6 +507,9 @@ cin>>taxi;
 	glutCreateWindow("Collect Objects by Vaneeza Ahmad"); // set the title of our game window
 	SetCanvasSize(width, height); // set the number of pixels...
 
+        GLuint texture;
+        texture = LoadTexture("sprite.bmp");
+	glBindTexture (GL_TEXTURE_2D, texture); 
 	// Register your functions to the library,
 	// you are telling the library names of function to call for different tasks.
 	//glutDisplayFunc(display); // tell library which function to call for drawing Canvas.
@@ -497,7 +523,13 @@ cin>>taxi;
 	glutMouseFunc(MouseClicked);
 	glutPassiveMotionFunc(MouseMoved); // Mouse
 	glutMotionFunc(MousePressedAndMoved); // Mouse
-
+         
+          pthread_create(&t2, NULL, drawPlayer, NULL);
+         pthread_join(t2, NULL);
+        
+         pthread_create(&t3, NULL, drawPassenger, (void*) width);
+         pthread_join(t3, NULL);
+         
 	// now handle the control to library and it will call our registered functions when
 	// it deems necessary...
 	glutMainLoop();
