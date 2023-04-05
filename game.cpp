@@ -41,13 +41,35 @@ void SetCanvasSize(int width, int height) {
 
 string *ptr;                                          //using pointer to assign color to taxi
 int xI = 10, yI = 800;
-int x2, y2, x3, y3, x4, y4, x5, y5/**Ptrx, *Ptry*/;
+int x2=0, y2=0;
+int x3, y3, x4, y4, x5, y5/**Ptrx, *Ptry*/;
 int a = 60, b=100;
 int c=b-a;
 
 int x=50, y=670;
 int z=y-x;
 pthread_t  t1, t2, t3, t4;   
+
+
+int X1=300, Y1=450, X2=700, Y2=350,X3=500, Y3=400,X4=500, Y4=650,X5=600, Y5=600,X6=400, Y6=550;
+
+int X7=350, Y7=500, X8=200, Y8=350,X9=100, Y9=400,X10=500, Y10=300,X11=150, Y11=200,X12=300, Y12=200;
+
+int score1=0, score2=0;
+
+bool objects[741][691];
+
+
+	
+
+	
+//for(int i=0; i<741; i++)
+//{
+//  for(int j=0; j<691; j++)
+//  {
+//     objects[i][j]=false;
+//  }
+//}
 void drawTaxi() 
 {
      if(*ptr=="red")
@@ -157,20 +179,48 @@ void drawPurpleCar()
 void* Menu(void* arg)
 {
 string name1, name2, taxi;
-cout<<"---------------START MENU---------------\nC0LLECT 0BJECTS GAME\n TWO PLAYERS GAME";
+cout<<"---------------START MENU---------------\nC0LLECT 0BJECTS GAME\n";
+
+       cout<<"---The Rules---\n1.Player must collect maximum objects to win the game.\n\n";
+       cout<<"Player1 plays with arrow keys and shift key to collect objects.\n\nPlayer2 plays with ASDW and spacebar to collect objects.\n\n";
        cout<<"Enter Player1 name: ";
        cin>>name1;
        cout<<"Enter Player2 name: ";
        cin>>name2;
-       cin>>taxi;
-            
-      
-       cout<<"Play the game by using arrowkeys"<<endl;
+
+} 
 
 
-}
 
-void drawBoard()                                 //Draws the player board
+	
+void objExist(int xx, int yy)
+{
+       
+       objects[300][450]=true;
+	objects[340][450]=true;
+	objects[320][490]=true;
+	objects[700][350]=true;
+	objects[740][350]=true;
+	objects[720][390]=true;
+	objects[500][400]=true;
+	objects[540][400]=true;
+        objects[520][440]=true;
+	objects[500][650]=true;
+	objects[540][650]=true;
+	objects[520][690]=true;
+	objects[600][600]=true;
+	objects[640][600]=true;
+	objects[620][640]=true;
+	objects[400][550]=true;
+	objects[440][550]=true;
+	objects[420][590]=true;
+	objects[350][500]=true;
+	objects[390][500]=true;
+	objects[370][540]=true;
+	objects[xx][yy]=false;
+
+}	
+void drawBoard(int xxx, int yyy)                                 //Draws the player board
 {
       // set the background color using function glClearColor.
 	// to change the background play with the red, green and blue values below.
@@ -179,85 +229,8 @@ void drawBoard()                                 //Draws the player board
 	glClearColor(1, 1, 1, 1); // Red==Green==Blue==1 --> White Colour
 	glClear (GL_COLOR_BUFFER_BIT); //Update the colors
 	
-	
-//        //Draw Buildings
-//        for(int i=20; i<181; i=i+40)
-//        {
-//	 DrawSquare(400, i, 50, colors[DARK_CYAN]);
-//	}
-//	
-//	for(int i=400; i<521; i=i+40)
-//        {
-//	DrawSquare(400, i, 50, colors[DARK_CYAN]);
-//	}
-//	
-//	for(int i=320; i<561; i=i+40)
-//        {
-//      	DrawSquare(i, 350, 50, colors[DARK_CYAN]);
-//	}
-//	
-//	for(int i=700; i<901; i=i+40)
-//        {
-//	DrawSquare(i, 500, 50, colors[DARK_CYAN]);
-//	}
-//	
-//	for(int i=740; i<901; i=i+40)
-//        {
-//	DrawSquare(i, 500, 50, colors[DARK_CYAN]);
-//	}
-//	
-//	for(int i=600; i<721; i=i+40)
-//        {
-//	DrawSquare(200, i, 50, colors[DARK_CYAN]);
-//	}
-//	for(int i=480; i<801; i=i+40)
-//        {
-//	DrawSquare(i, 700, 50, colors[DARK_CYAN]);
-//	}
-//	
-//	for(int i=660; i<741; i=i+40)
-//	{
-//	DrawSquare(720, i, 60, colors[DARK_CYAN]);
-//	}
-//	
-//	for(int i=320; i<521; i=i+40)
-//        {
-//	DrawSquare(i, 350, 50, colors[DARK_CYAN]);
-//	}
-//	
-//	for(int i=140; i<261; i=i+40)
-//        {
-//	DrawSquare(100, i, 50, colors[DARK_CYAN]);
-//	}
-//	
-//	for(int i=0; i<81; i=i+40)
-//        {
-//	DrawSquare(i, 140, 50, colors[DARK_CYAN]);
-//	}
-//	
-//	for(int i=700; i<821; i=i+40)
-//        {
-//	DrawSquare(i, 260, 50, colors[DARK_CYAN]);
-//	}
-//	
-//	for(int i=100; i<221; i=i+40)
-//        {
-//	DrawSquare(700, i, 50, colors[DARK_CYAN]);
-//        }
-//	
-//	for(int i=40; i<161; i=i+40)
-//        {
-//	DrawSquare(i, 450, 50, colors[DARK_CYAN]);
-//	}
-//	
-//	for(int i=100; i<221; i=i+40)
-//        {	
-//	DrawSquare(i, 20, 50, colors[DARK_CYAN]);
-//	}
-//	
-//	//Draw Roads
-//        
-DrawLine(100, 100, 800, 100, 10, colors[DARK_CYAN]); //bottom line
+	objExist(xxx, yyy);
+        DrawLine(100, 100, 800, 100, 10, colors[DARK_CYAN]); //bottom line
 	DrawLine(100, 100, 100, 800, 10, colors[DARK_CYAN]); // left line
 	DrawLine(100, 800, 800, 800, 10, colors[DARK_CYAN]); //top line
 	DrawLine(800, 100, 800, 800, 10, colors[DARK_CYAN]); //right line
@@ -270,27 +243,54 @@ DrawLine(100, 100, 800, 100, 10, colors[DARK_CYAN]); //bottom line
         {DrawLine( i , 100 ,  i , 800 , 4 , colors[DARK_CYAN] );}
         
         
-	//Draw Trees
-	DrawTriangle( 300, 450 , 340, 450 , 320 , 490, colors[GOLD] );	
-	DrawTriangle( 700, 350 , 740, 350 , 720 , 390, colors[ORANGE] );
-	DrawTriangle( 500, 400 , 540, 400 , 520 , 440, colors[BLUE] );
-	DrawTriangle( 500, 650 , 540, 650 , 520 , 690, colors[GREEN] );
-	DrawTriangle( 600, 600 , 640, 600 , 620 , 640, colors[VIOLET] );
-	DrawTriangle( 400, 550 , 440, 550 , 420 , 590, colors[TOMATO] );
 	
+//	objects[300][450]==true;
+//	objects[340][450]==true;
+//	objects[320][490]==true;
+//	objects[700][350]=true;
+//	objects[740][350]=true;
+//	objects[720][390]=true;
+//	objects[500][400]=true;
+//	objects[540][400]=true;
+//        objects[520][440]=true;
+//	objects[500][650]=true;
+
+
+
+        DrawTriangle( X1, Y1 , X1+40, Y1 , X1+20 , Y1+40, colors[GOLD] );	
+	DrawTriangle( X2, Y2 , X2+40, Y2 , X2+20 , Y2+40, colors[ORANGE] );
+	DrawTriangle( X3, Y3 , X3+40, Y3 , X3+20 , Y3+40, colors[BLUE] );
+	DrawTriangle( X4, Y4 , X4+40, Y4 , X4+20 , Y4+40, colors[GREEN] );
+	DrawTriangle( X5, Y5 , X5+40, Y5 , X5+20 , Y5+40, colors[VIOLET] );
+	DrawTriangle( X6, Y6 , X6+40, Y6 , X6+20 , Y6+40, colors[TOMATO] );
+	DrawTriangle( X7, Y7 , X7+40, Y7 , X7+20 , Y7+40, colors[CRIMSON] );	
 	
-	DrawTriangle( 350, 500 , 390, 500 , 370 , 540, colors[CRIMSON] );	
-	DrawTriangle( 200, 350 , 240, 350 , 220 , 390, colors[HOT_PINK] );
-	DrawTriangle( 100, 400 , 140, 400 , 120 , 440, colors[DEEP_PINK] );
-	DrawTriangle( 500, 300 , 540, 300 , 520 , 340, colors[NAVY] );
-	DrawTriangle( 150, 200 , 190, 200 , 170 , 240, colors[PLUM] );
-	DrawTriangle( 300, 200 , 340, 200 , 320 , 240, colors[TAN] );
+	DrawTriangle( X8, Y8 , X8+40, Y8 , X8+20 , Y8+40, colors[HOT_PINK] );
+	DrawTriangle( X9, Y9 , X9+40, Y9 , X9+20 , Y9+40, colors[DEEP_PINK] );
+	DrawTriangle( X10, Y10 , X10+40, Y10 , X10+20 , Y10+40, colors[NAVY] );
+	DrawTriangle( X11, Y11 , X11+40, Y11 , X11+20 , Y11+40, colors[PLUM] );
+	DrawTriangle( X12, Y12 , X12+40, Y12 , X12+20 , Y12+40, colors[TAN] );
 	
+
+//        DrawTriangle( 300, 450 , 340, 450 , 320 , 490, colors[var] );	
+//	DrawTriangle( 700, 350 , 740, 350 , 720 , 390, colors[ORANGE] );
+//	DrawTriangle( 500, 400 , 540, 400 , 520 , 440, colors[BLUE] );
+//	DrawTriangle( 500, 650 , 540, 650 , 520 , 690, colors[GREEN] );
+//	DrawTriangle( 600, 600 , 640, 600 , 620 , 640, colors[VIOLET] );
+//	DrawTriangle( 400, 550 , 440, 550 , 420 , 590, colors[TOMATO] );
+//	DrawTriangle( 350, 500 , 390, 500 , 370 , 540, colors[CRIMSON] );	
+//	
+//	DrawTriangle( 200, 350 , 240, 350 , 220 , 390, colors[HOT_PINK] );
+//	DrawTriangle( 100, 400 , 140, 400 , 120 , 440, colors[DEEP_PINK] );
+//	DrawTriangle( 500, 300 , 540, 300 , 520 , 340, colors[NAVY] );
+//	DrawTriangle( 150, 200 , 190, 200 , 170 , 240, colors[PLUM] );
+//	DrawTriangle( 300, 200 , 340, 200 , 320 , 240, colors[TAN] );
 	
+	//DrawTriangle(xxx, yyy, xxx+40, yyy, xxx+20, yyy+40,colors[WHITE]);
 	//Display Score
-	DrawString( 20, 800, "Player1 Score=", colors[WHITE]);
-	DrawString( 180, 800, Num2Str(45), colors[WHITE]);
-	DrawString( 800, 800, "Player2 Score=0", colors[WHITE]);
+	DrawString( 20, 800, "Player1 Score=", colors[BLACK]);
+	DrawString( 180, 800, Num2Str(score1), colors[BLACK]);
+	DrawString( 800, 800, "Player2 Score=0", colors[BLACK]);
 	
 	
 }	
@@ -303,12 +303,13 @@ DrawLine(100, 100, 800, 100, 10, colors[DARK_CYAN]); //bottom line
 
 void GameDisplay()/**/{
 	int nothing=0;
-	drawBoard();
-	drawTaxi();
+	drawBoard(x2, y2);
+	//drawTaxi();
 	//drawblueCar();
 	//drawGreenCar();
 	//drawCyanCar();
 	//drawPurpleCar();
+	DrawTriangle(x2, y2, x2+40, y2, x2+20, y2+40,colors[WHITE]);
 	
 	drawPassenger((void*)nothing);
 	drawPlayer((void*)nothing);
@@ -357,12 +358,96 @@ void NonPrintableKeys(int key, int xx, int yy) {
 		c-=10;
 		
 	}
+	
+	else if (key==136)
+	{
+	    if(a==X1 && b==Y1)
+	       {X1=-100;
+	       Y1=-100;
+	       score1+=5;
+	       x2=a;
+	       y2=b;}
+	       if(a==X2 && b==Y2)
+	       {X2=-100;
+	       Y2=-100;
+	       score1+=5;
+	       x2=a;
+	       y2=b;}
+	       if(a==X3 && b==Y3)
+	       {X3=-100;
+	       Y3=-100;
+	       score1+=5;
+	       x2=a;
+	       y2=b;} 
+	       if(a==X4 && b==Y4)
+	       {X4=-100;
+	       Y4=-100;
+	       score1+=5;
+	       x2=a;
+	       y2=b;} 
+	       if(a==X5 && b==Y5)
+	       {X5=-100;
+	       Y5=-100;
+	       score1+=5;
+	       x2=a;
+	       y2=b;} 
+	       if(a==X6 && b==Y6)
+	       {X6=-100;
+	       Y6=-100;
+	       score1+=5;
+	       x2=a;
+	       y2=b;} 
+	       if(a==X7 && b==Y7)
+	       {X7=-100;
+	       Y7=-100;
+	       score1+=5;
+	       x2=a;
+	       y2=b;} 
+	       if(a==X8 && b==Y8)
+	       {X8=-100;
+	       Y8=-100;
+	       score1+=5;
+	       x2=a;
+	       y2=b;} 
+	       if(a==X9 && b==Y9)
+	       {X9=-100;
+	       Y9=-100;
+	       score1+=5;
+	       x2=a;
+	       y2=b;} 
+	       if(a==X10 && b==Y10)
+	       {X10=-100;
+	       Y10=-100;
+	       score1+=5;
+	       x2=a;
+	       y2=b;}
+	       if(a==X11 && b==Y11)
+	       {X11=-100;
+	       Y11=-100;
+	       score1+=5;
+	       x2=a;
+	       y2=b;}
+	       if(a==X12 && b==Y12)
+	       {X12=-100;
+	       Y12=-100;
+	       score1+=5;
+	       x2=a;
+	       y2=b;}    
+	       objects[a][b]=false;
+	     
+	
+	}
 
 	/* This function calls the Display function to redo the drawing. Whenever you need to redraw just call
 	 * this function*/
 
 	glutPostRedisplay();
 
+}
+
+void drawing()
+{
+   DrawTriangle(x, y, x+40, y, x+20, y+40,colors[WHITE]);
 }
 
 /*This function is called (automatically) whenever any printable key (such as x,b, enter, etc.)
@@ -389,6 +474,7 @@ void PrintableKeys(unsigned char key, int xx, int yy) {
 //	}
 //	ascii of A is 97, d is 100 , s is 115, w is 119
 	
+	
 	if(key ==100)
 	{
 	   //xI+=10;
@@ -410,7 +496,90 @@ void PrintableKeys(unsigned char key, int xx, int yy) {
 	   y+=10;
 	   z+=10;
 	}
-	
+	else if(key==32)
+	{
+//	   if (objects[x][y]==true || objects[x][z]==true)
+//	       //DrawTriangle(x, y, x+40, y, x+20, y+40,colors[BLUE]);
+//	       cout<<"Object at point ["<<x<<"]["<<y<<"]endl";
+//	       x2=x;
+//	       y2=y;
+	       
+	       if(x==X1 && y==Y1)
+	       {X1=-100;
+	       Y1=-100;
+	       score1+=5;
+	       x2=x;
+	       y2=y;}
+	       if(x==X2 && y==Y2)
+	       {X2=-100;
+	       Y2=-100;
+	       score1+=5;
+	       x2=x;
+	       y2=y;}
+	       if(x==X3 && y==Y3)
+	       {X3=-100;
+	       Y3=-100;
+	       score1+=5;
+	       x2=x;
+	       y2=y;} 
+	       if(x==X4 && y==Y4)
+	       {X4=-100;
+	       Y4=-100;
+	       score1+=5;
+	       x2=x;
+	       y2=y;} 
+	       if(x==X5 && y==Y5)
+	       {X5=-100;
+	       Y5=-100;
+	       score1+=5;
+	       x2=x;
+	       y2=y;} 
+	       if(x==X6 && y==Y6)
+	       {X6=-100;
+	       Y6=-100;
+	       score1+=5;
+	       x2=x;
+	       y2=y;} 
+	       if(x==X7 && y==Y7)
+	       {X7=-100;
+	       Y7=-100;
+	       score1+=5;
+	       x2=x;
+	       y2=y;} 
+	       if(x==X8 && y==Y8)
+	       {X8=-100;
+	       Y8=-100;
+	       score1+=5;
+	       x2=x;
+	       y2=y;} 
+	       if(x==X9 && y==Y9)
+	       {X9=-100;
+	       Y9=-100;
+	       score1+=5;
+	       x2=x;
+	       y2=y;} 
+	       if(x==X10 && y==Y10)
+	       {X10=-100;
+	       Y10=-100;
+	       score1+=5;
+	       x2=x;
+	       y2=y;}
+	       if(x==X11 && y==Y11)
+	       {X11=-100;
+	       Y11=-100;
+	       score1+=5;
+	       x2=x;
+	       y2=y;}
+	       if(x==X12 && y==Y12)
+	       {X12=-100;
+	       Y12=-100;
+	       score1+=5;
+	       x2=x;
+	       y2=y;}    
+	       objects[x][y]=false;
+	       //glutDisplayFunc(drawing);
+	       
+	}
 	
 	glutPostRedisplay();
 }
@@ -478,27 +647,11 @@ void MouseClicked(int button, int state, int x, int y) {
 int main(int argc, char*argv[]) {
 
 	int width = 1020, height = 840; // i have set my window size to be 800 x 600 
-        string name1, name2, taxi;
-    
-       ptr = & taxi;
-//       cout<<"---------------START MENU---------------\nC0LLECT 0BJECTS GAME\n TWO PLAYERS GAME";
-//       cout<<"Enter Player1 name: ";
-//       cin>>name1;
-//       cout<<"Enter Player2 name: ";
-//       cin>>name2;
-//       cin>>taxi;
-//            
-//      
-//       cout<<"Play the game by using arrowkeys"<<endl;
-
+        string name1, name2;
           pthread_create(&t1, NULL, Menu, (void*) width);
          pthread_join(t1, NULL);
           //sleep(2);
-          cout<<"Enter taxi";
-cin>>taxi;
-
-
-         
+          
 	InitRandomizer(); // seed the random number generator...
 	glutInit(&argc, argv); // initialize the graphics library...
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA); // we will be using color display mode
@@ -514,6 +667,7 @@ cin>>taxi;
 	// you are telling the library names of function to call for different tasks.
 	//glutDisplayFunc(display); // tell library which function to call for drawing Canvas.
 
+        generateBoard:
 	glutDisplayFunc(GameDisplay); // tell library which function to call for drawing Canvas.
 	glutSpecialFunc(NonPrintableKeys); // tell library which function to call for non-printable ASCII characters
 	glutKeyboardFunc(PrintableKeys); // tell library which function to call for printable ASCII characters
