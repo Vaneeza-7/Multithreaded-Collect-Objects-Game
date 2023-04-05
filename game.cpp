@@ -290,8 +290,8 @@ void drawBoard(int xxx, int yyy)                                 //Draws the pla
 	//Display Score
 	DrawString( 20, 800, "Player1 Score=", colors[BLACK]);
 	DrawString( 180, 800, Num2Str(score1), colors[BLACK]);
-	DrawString( 800, 800, "Player2 Score=0", colors[BLACK]);
-	
+	DrawString( 800, 800, "Player2 Score=", colors[BLACK]);
+	DrawString( 950, 800, Num2Str(score2), colors[BLACK]);
 	
 }	
 
@@ -358,85 +358,10 @@ void NonPrintableKeys(int key, int xx, int yy) {
 		c-=10;
 		
 	}
-	
-	else if (key==136)
-	{
-	    if(a==X1 && b==Y1)
-	       {X1=-100;
-	       Y1=-100;
-	       score1+=5;
-	       x2=a;
-	       y2=b;}
-	       if(a==X2 && b==Y2)
-	       {X2=-100;
-	       Y2=-100;
-	       score1+=5;
-	       x2=a;
-	       y2=b;}
-	       if(a==X3 && b==Y3)
-	       {X3=-100;
-	       Y3=-100;
-	       score1+=5;
-	       x2=a;
-	       y2=b;} 
-	       if(a==X4 && b==Y4)
-	       {X4=-100;
-	       Y4=-100;
-	       score1+=5;
-	       x2=a;
-	       y2=b;} 
-	       if(a==X5 && b==Y5)
-	       {X5=-100;
-	       Y5=-100;
-	       score1+=5;
-	       x2=a;
-	       y2=b;} 
-	       if(a==X6 && b==Y6)
-	       {X6=-100;
-	       Y6=-100;
-	       score1+=5;
-	       x2=a;
-	       y2=b;} 
-	       if(a==X7 && b==Y7)
-	       {X7=-100;
-	       Y7=-100;
-	       score1+=5;
-	       x2=a;
-	       y2=b;} 
-	       if(a==X8 && b==Y8)
-	       {X8=-100;
-	       Y8=-100;
-	       score1+=5;
-	       x2=a;
-	       y2=b;} 
-	       if(a==X9 && b==Y9)
-	       {X9=-100;
-	       Y9=-100;
-	       score1+=5;
-	       x2=a;
-	       y2=b;} 
-	       if(a==X10 && b==Y10)
-	       {X10=-100;
-	       Y10=-100;
-	       score1+=5;
-	       x2=a;
-	       y2=b;}
-	       if(a==X11 && b==Y11)
-	       {X11=-100;
-	       Y11=-100;
-	       score1+=5;
-	       x2=a;
-	       y2=b;}
-	       if(a==X12 && b==Y12)
-	       {X12=-100;
-	       Y12=-100;
-	       score1+=5;
-	       x2=a;
-	       y2=b;}    
-	       objects[a][b]=false;
+
 	     
 	
-	}
+	
 
 	/* This function calls the Display function to redo the drawing. Whenever you need to redraw just call
 	 * this function*/
@@ -581,6 +506,83 @@ void PrintableKeys(unsigned char key, int xx, int yy) {
 	       
 	}
 	
+	else if (key==8)
+	{
+	    if(a==X1 && b==Y1)
+	       {X1=-100;
+	       Y1=-100;
+	       score2+=5;
+	       x2=a;
+	       y2=b;}
+	       if(a==X2 && b==Y2)
+	       {X2=-100;
+	       Y2=-100;
+	       score2+=5;
+	       x2=a;
+	       y2=b;}
+	       if(a==X3 && b==Y3)
+	       {X3=-100;
+	       Y3=-100;
+	       score2+=5;
+	       x2=a;
+	       y2=b;} 
+	       if(a==X4 && b==Y4)
+	       {X4=-100;
+	       Y4=-100;
+	       score2+=5;
+	       x2=a;
+	       y2=b;} 
+	       if(a==X5 && b==Y5)
+	       {X5=-100;
+	       Y5=-100;
+	       score2+=5;
+	       x2=a;
+	       y2=b;} 
+	       if(a==X6 && b==Y6)
+	       {X6=-100;
+	       Y6=-100;
+	       score2+=5;
+	       x2=a;
+	       y2=b;} 
+	       if(a==X7 && b==Y7)
+	       {X7=-100;
+	       Y7=-100;
+	       score2+=5;
+	       x2=a;
+	       y2=b;} 
+	       if(a==X8 && b==Y8)
+	       {X8=-100;
+	       Y8=-100;
+	       score2+=5;
+	       x2=a;
+	       y2=b;} 
+	       if(a==X9 && b==Y9)
+	       {X9=-100;
+	       Y9=-100;
+	       score2+=5;
+	       x2=a;
+	       y2=b;} 
+	       if(a==X10 && b==Y10)
+	       {X10=-100;
+	       Y10=-100;
+	       score2+=5;
+	       x2=a;
+	       y2=b;}
+	       if(a==X11 && b==Y11)
+	       {X11=-100;
+	       Y11=-100;
+	       score2+=5;
+	       x2=a;
+	       y2=b;}
+	       if(a==X12 && b==Y12)
+	       {X12=-100;
+	       Y12=-100;
+	       score2+=5;
+	       x2=a;
+	       y2=b;}    
+	       objects[a][b]=false;
+	}
+	
 	glutPostRedisplay();
 }
 
@@ -660,10 +662,10 @@ int main(int argc, char*argv[]) {
 	glutCreateWindow("Collect Objects by Vaneeza Ahmad"); // set the title of our game window
 	SetCanvasSize(width, height); // set the number of pixels...
 
-        GLuint texture;
-        texture = LoadTexture("sprite.bmp");
-	glBindTexture (GL_TEXTURE_2D, texture); 
-	// Register your functions to the library,
+//        GLuint texture;
+//        texture = LoadTexture("sprite.bmp");
+//	glBindTexture (GL_TEXTURE_2D, texture); 
+//	// Register your functions to the library,
 	// you are telling the library names of function to call for different tasks.
 	//glutDisplayFunc(display); // tell library which function to call for drawing Canvas.
 
