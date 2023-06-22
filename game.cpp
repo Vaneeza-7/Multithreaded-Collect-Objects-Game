@@ -31,6 +31,12 @@ using namespace std;
  *  that is what dimensions (x and y) your game will have
  *  Note that the bottom-left coordinate has value (0,0) and top-right coordinate has value (width-1,height-1)
  * */
+ 
+ 
+pthread_t  main_thread, player1_thread, player2_thread, menu_thread, graphics_thread ;  
+ 
+ 
+ 
 void SetCanvasSize(int width, int height) {
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity();
@@ -39,7 +45,7 @@ void SetCanvasSize(int width, int height) {
 	glLoadIdentity();
 }
 
-string *ptr;                                          //using pointer to assign color to taxi
+                                          //using pointer to assign color to taxi
 int xI = 10, yI = 800;
 int x2=0, y2=0;
 int x3, y3, x4, y4, x5, y5/**Ptrx, *Ptry*/;
@@ -48,8 +54,6 @@ int c=b-a;
 
 int x=50, y=670;
 int z=y-x;
-pthread_t  t1, t2, t3, t4;   
-
 
 int X1=300, Y1=450, X2=700, Y2=350,X3=500, Y3=400,X4=500, Y4=650,X5=600, Y5=600,X6=400, Y6=550;
 
@@ -59,52 +63,6 @@ int score1=0, score2=0;
 
 bool objects[741][691];
 
-
-	
-
-	
-//for(int i=0; i<741; i++)
-//{
-//  for(int j=0; j<691; j++)
-//  {
-//     objects[i][j]=false;
-//  }
-//}
-void drawTaxi() 
-{
-     if(*ptr=="red")
-   {
-     DrawSquare(xI, yI, 40, colors[RED]);
-     glutPostRedisplay();
-   }
-	                                               //draws the taxi that moves with controls
-     else if(*ptr=="yellow")
-   {
-      DrawSquare(xI, yI, 40, colors[ORANGE]);
-      glutPostRedisplay();
-   }
-}
-
-
-void drawblueCar() 
-{   
-
-       x2 = 300;
-       y2 = GetRandInRange(10, 300);
-                                                        //draws a random moving blue car 
-       DrawSquare(x2, y2, 30, colors[BLUE]);
-       glutPostRedisplay();
-}
-
-void drawGreenCar()
-{
-
-      InitRandomizer();       
-       x3 = GetRandInRange(550, 1010);
-       y3 = 65;
-                                                      //draws a random moving green car 
-       DrawSquare(x3, y3, 30, colors[YELLOW]);      
-}
 
 void* drawPlayer(void* arg){
  DrawCircle(a, b, 10,colors[BLACK]);
@@ -156,25 +114,6 @@ void* drawPassenger(void* arg)                                       //draws pas
 //	DrawLine( 500 , 490,  510 , 470 , 2 , colors[WHITE] );
 //        DrawLine( 500 , 490 , 480 , 470 , 2 , colors[WHITE] );
 }      
-void drawCyanCar() 
-{   
-
-        x4 = GetRandInRange(500, 880);
-        y4 = 410;
-                         //draws a random moving cyan car 
-       DrawSquare(x4, y4, 30, colors[DARK_CYAN]);
-       glutPostRedisplay();
-}
-
-void drawPurpleCar() 
-{   
-
-        x5 = GetRandInRange(515, 990);
-        y5 = 800;
-                         //draws a random moving purple car 
-       DrawSquare(x5, y5, 30, colors[VIOLET]);
-       glutPostRedisplay();
-}
 
 void* Menu(void* arg)
 {
@@ -643,6 +582,24 @@ void MouseClicked(int button, int state, int x, int y) {
 	}
 	glutPostRedisplay();
 }
+
+
+
+void* creationWindow(void* arg)
+{
+       glutDisplayFunc(GameDisplay); // tell library which function to call for drawing Canvas.
+	glutSpecialFunc(NonPrintableKeys); // tell library which function to call for non-printable ASCII characters
+	glutKeyboardFunc(PrintableKeys); // tell library which function to call for printable ASCII characters
+	// This function tells the library to call our Timer function after 1000.0/FPS milliseconds...
+	glutTimerFunc(1000.0, Timer, 0);
+
+	glutMouseFunc(MouseClicked);
+	glutPassiveMotionFunc(MouseMoved); // Mouse
+	glutMotionFunc(MousePressedAndMoved); // Mouse
+        
+
+
+}
 /*
  * our gateway main function
  * */
@@ -650,9 +607,11 @@ int main(int argc, char*argv[]) {
 
 	int width = 1020, height = 840; // i have set my window size to be 800 x 600 
         string name1, name2;
-          pthread_create(&t1, NULL, Menu, (void*) width);
-         pthread_join(t1, NULL);
+        pthread_create(&menu_thread, NULL, Menu, (void*) width);
+        pthread_join(menu_thread, NULL);
           //sleep(2);
+          
+        
           
 	InitRandomizer(); // seed the random number generator...
 	glutInit(&argc, argv); // initialize the graphics library...
@@ -670,21 +629,27 @@ int main(int argc, char*argv[]) {
 	//glutDisplayFunc(display); // tell library which function to call for drawing Canvas.
 
         generateBoard:
-	glutDisplayFunc(GameDisplay); // tell library which function to call for drawing Canvas.
-	glutSpecialFunc(NonPrintableKeys); // tell library which function to call for non-printable ASCII characters
-	glutKeyboardFunc(PrintableKeys); // tell library which function to call for printable ASCII characters
-	// This function tells the library to call our Timer function after 1000.0/FPS milliseconds...
-	glutTimerFunc(1000.0, Timer, 0);
+//	glutDisplayFunc(GameDisplay); // tell library which function to call for drawing Canvas.
+//	glutSpecialFunc(NonPrintableKeys); // tell library which function to call for non-printable ASCII characters
+//	glutKeyboardFunc(PrintableKeys); // tell library which function to call for printable ASCII characters
+//	// This function tells the library to call our Timer function after 1000.0/FPS milliseconds...
+//	glutTimerFunc(1000.0, Timer, 0);
 
-	glutMouseFunc(MouseClicked);
-	glutPassiveMotionFunc(MouseMoved); // Mouse
-	glutMotionFunc(MousePressedAndMoved); // Mouse
-         
-          pthread_create(&t2, NULL, drawPlayer, NULL);
-         pthread_join(t2, NULL);
+
+       pthread_create(&graphics_thread, NULL, creationWindow, (void*) width);
+       //	glutMouseFunc(MouseClicked);
+      //	glutPassiveMotionFunc(MouseMoved); // Mouse
+     //	glutMotionFunc(MousePressedAndMoved); // Mouse
+    //         
+
+       
+       pthread_join(graphics_thread, NULL);
+       
+         pthread_create(&player1_thread, NULL, drawPlayer, NULL);
+         pthread_join(player1_thread, NULL);
         
-         pthread_create(&t3, NULL, drawPassenger, (void*) width);
-         pthread_join(t3, NULL);
+         pthread_create(&player2_thread, NULL, drawPassenger, (void*) width);
+         pthread_join(player2_thread, NULL);
          
 	// now handle the control to library and it will call our registered functions when
 	// it deems necessary...
